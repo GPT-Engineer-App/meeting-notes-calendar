@@ -5,17 +5,27 @@ import { useState } from "react";
 const Index = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [meetings, setMeetings] = useState([]);
+  const [meetingDate, setMeetingDate] = useState("");
+  const [meetingTime, setMeetingTime] = useState("");
   const [selectedMeeting, setSelectedMeeting] = useState(null);
   const [notes, setNotes] = useState("");
   const [folders, setFolders] = useState([{ name: "2023", children: [{ name: "January", children: [{ name: "Meeting One", linkedNote: "" }] }] }]);
 
   const addMeeting = () => {
+    if (!meetingDate || !meetingTime) {
+      alert("Please select both date and time for the meeting.");
+      return;
+    }
     const newMeeting = {
       id: meetings.length + 1,
       title: `Meeting ${meetings.length + 1}`,
+      date: meetingDate,
+      time: meetingTime,
       notes: "",
     };
     setMeetings([...meetings, newMeeting]);
+    setMeetingDate("");
+    setMeetingTime("");
   };
 
   const openMeeting = (meeting) => {
@@ -86,7 +96,11 @@ const Index = () => {
         <Box>
           <Flex justify="space-between" align="center" mb={2}>
             <Text fontSize="2xl">Meetings</Text>
-            <IconButton aria-label="Add meeting" icon={<FaPlus />} onClick={addMeeting} />
+            <Flex>
+              <Input placeholder="Select Date" type="date" value={meetingDate} onChange={(e) => setMeetingDate(e.target.value)} />
+              <Input ml={2} placeholder="Select Time" type="time" value={meetingTime} onChange={(e) => setMeetingTime(e.target.value)} />
+              <IconButton aria-label="Add meeting" icon={<FaPlus />} onClick={addMeeting} ml={2} />
+            </Flex>
           </Flex>
           <List spacing={3}>
             {meetings.map((meeting) => (
