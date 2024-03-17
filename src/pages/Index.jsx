@@ -1,8 +1,9 @@
-import { Box, Flex, Heading, IconButton, Input, Stack, Text, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, Textarea, List, ListItem, ListIcon, VStack, Divider } from "@chakra-ui/react";
-import { FaCalendarAlt, FaFolder, FaFolderOpen, FaPlus, FaFileAlt } from "react-icons/fa";
+import { Box, Flex, Heading, IconButton, Input, Stack, Text, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, Textarea, List, ListItem, ListIcon, VStack, Divider, useColorMode } from "@chakra-ui/react";
+import { FaCalendarAlt, FaFolder, FaFolderOpen, FaPlus, FaFileAlt, FaSun, FaMoon } from "react-icons/fa";
 import { useState } from "react";
 
 const Index = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [meetings, setMeetings] = useState([]);
   const [meetingDate, setMeetingDate] = useState("");
@@ -91,7 +92,10 @@ const Index = () => {
 
   return (
     <Box p={5}>
-      <Heading mb={4}>Calendar Meetings App</Heading>
+      <Flex justify="space-between" align="center" mb={4}>
+        <Heading>Calendar Meetings App</Heading>
+        <IconButton icon={colorMode === "light" ? <FaMoon /> : <FaSun />} onClick={toggleColorMode} variant="ghost" />
+      </Flex>
       <Stack spacing={8}>
         <Box>
           <Flex justify="space-between" align="center" mb={2}>
